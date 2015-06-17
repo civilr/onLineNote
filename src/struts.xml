@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+<package name="com.onLineNote.action.right" extends="struts-default">
+		<action name="Login" class="com.onLineNote.action.right.LoginAction">
+          <result name="suc" type="redirectAction">  
+           <param name="actionName">Welcome</param>  
+            <param name="namespace">/</param>  
+         </result>  
+			<result name="fal">/index.jsp</result>
+		</action>
+		<action name="Welcome" class="com.onLineNote.action.right.WelcomeAction">
+			<result name="suc">/welcome.jsp</result>
+			<result name="fal">/index.jsp</result>
+		</action>
+		<action name="Logout" class="com.onLineNote.action.right.LogoutAction">
+			<result name="suc">/index.jsp</result>
+		</action>
+		
+		<action name="GetEnumAction" class="com.onLineNote.action.right.GetEnumAction"/>
+		
+		<action name="AddNote" class="com.onLineNote.action.right.AddNoteAction"/>
+		
+	    <action name="GetNoteInfo" class="com.onLineNote.action.right.GetTreeInfoAction" method="getNoteInfo"/>
+	    
+	    <action name="GetNodeInfoByContent" class="com.onLineNote.action.right.GetTreeInfoAction" method="getNodeInfoByContent"/>
+	    
+		<action name="GetTreeInfoAction" class="com.onLineNote.action.right.GetTreeInfoAction"/>
+		
+		
+			
+</package>
+
+</struts>    

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml">
+		</property>
+  <property name="hibernateProperties">
+   <props>
+    <prop key="hibernate.show_sql">true</prop>
+   </props>
+  </property>
+</bean>
+
+<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="baseTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="query*">PROPAGATION_REQUIRED,readOnly</prop>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+<!-- 配置数据持久层 -->
+ <bean id="userDao"
+  class="com.onLineNote.dao.right.UserDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"></property>
+ </bean>
+ 
+  <bean id="enumDao"
+  class="com.onLineNote.dao.common.EnumDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"></property>
+ </bean>
+ 
+<bean id="noteInfoDao"
+  class="com.onLineNote.dao.common.NoteInfoDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"></property>
+ </bean>
+
+	
+	 <!-- 配置业务逻辑层 -->
+ <bean id="rightService"
+  class="com.onLineNote.service.right.RightServiceImpl">
+   <property name="userDao" ref="userDao"></property>
+ </bean>
+ 
+  <bean id="enumService"
+  class="com.onLineNote.service.common.EnumServiceImpl">
+   <property name="enumDao" ref="enumDao"></property>
+ </bean>
+ 
+   <bean id="phoneBusinessInter"
+  class="com.onLineNote.Servlet.PhoneBusinessInterImpl">
+   <property name="noteInfoDao" ref="noteInfoDao"></property>
+ </bean>
+ 
+ 
+ 
+<bean id="noteInfoService" parent="baseTransactionProxy">
+		<property name="target">
+			<bean class="com.onLineNote.service.common.NoteInfoServieImpl">
+				<property name="noteInfoDao" ref="noteInfoDao" />
+			</bean>
+		</property>
+	</bean>
+ 
+ 
+ 
+ 
+
+ <!-- 配置控制层 -->
+ <bean id="LoginAction"
+  class="com.onLineNote.action.right.LoginAction"  scope="prototype">
+  <property name="rightService" ref="rightService"></property>
+ </bean>
+ 
+  <bean id="GetEnumAction"
+  class="com.onLineNote.action.right.GetEnumAction"  scope="prototype">
+  <property name="enumService" ref="enumService"></property>
+ </bean>
+ 
+  
+  <bean id="AddNoteAction"
+  class="com.onLineNote.action.right.AddNoteAction"  scope="prototype">
+  <property name="noteInfoService" ref="noteInfoService"></property>
+ </bean>
+ 
+   <bean id="GetTreeInfoAction"
+  class="com.onLineNote.action.right.GetTreeInfoAction"  scope="prototype">
+  <property name="noteInfoService" ref="noteInfoService"></property>
+ </bean>
+ 
+ <bean id="phoneBusinessInterAction" class="com.onLineNote.Servlet.PhoneServlet"  scope="prototype">
+ <property name="phoneBusinessInter" ref="phoneBusinessInter"></property>
+ </bean>
+	
+	</beans>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee   http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+ <!-- Spring ApplicationContext配置文件的路径,可使用通配符。多个路径用逗号分隔。此参数用于后面的Spring-Context loader -->
+ <context-param>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>classpath*:applicationContext.xml</param-value>
+ </context-param>
+ <filter>
+  <filter-name>struts2</filter-name>
+  <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+ </filter>
+ <filter>
+  <filter-name>PageFilter</filter-name>
+  <filter-class>com.onLineNote.Filter.PageFilter</filter-class>
+  <init-param>
+   <param-name>ignorePage</param-name>
+   <param-value>/index.jsp,/Login.action,/Logout.action,/PhoneServlet.do</param-value>
+  </init-param>
+ </filter>
+ <filter-mapping>
+  <filter-name>PageFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping>
+ <filter-mapping>
+  <filter-name>struts2</filter-name>
+  <url-pattern>/*</url-pattern>
+ </filter-mapping>
+ <listener>
+  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+ </listener>
+ <servlet>
+  <servlet-name>PhoneServlet</servlet-name>
+  <servlet-class>com.onLineNote.Servlet.PhoneServlet</servlet-class>
+ </servlet>
+ <servlet-mapping>
+  <servlet-name>PhoneServlet</servlet-name>
+  <url-pattern>/PhoneServlet.do</url-pattern>
+ </servlet-mapping>
+ <welcome-file-list>
+  <welcome-file>index.jsp</welcome-file>
+ </welcome-file-list>
+ <login-config>
+  <auth-method>BASIC</auth-method>
+ </login-config>
+</web-app>

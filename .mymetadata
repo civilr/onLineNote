@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="onLineNote"
+  id="myeclipse.1428647157264"
+  context-root="/onLineNote"
+  j2ee-spec="5.0"
+  archive="onLineNote.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
