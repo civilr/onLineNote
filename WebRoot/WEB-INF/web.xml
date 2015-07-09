@@ -15,7 +15,7 @@
   <filter-class>com.onLineNote.Filter.PageFilter</filter-class>
   <init-param>
    <param-name>ignorePage</param-name>
-   <param-value>/index.jsp,/Login.action,/Logout.action,/PhoneServlet.do</param-value>
+   <param-value>/index.jsp,/Login.action,/Logout.action,/PhoneServlet.do,/regist.jsp,/Regist.action,/login.jsp,/RegistSubmit.action</param-value>
   </init-param>
  </filter>
  <filter-mapping>

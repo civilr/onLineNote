@@ -37,6 +37,12 @@
 	
 	
 <!-- 配置数据持久层 -->
+ <bean id="projectDao"
+  class="com.onLineNote.dao.project.ProjectDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"></property>
+ </bean>
+
+
  <bean id="userDao"
   class="com.onLineNote.dao.right.UserDaoImpl">
   <property name="sessionFactory" ref="sessionFactory"></property>
@@ -54,6 +60,15 @@
 
 	
 	 <!-- 配置业务逻辑层 -->
+ <bean id="projectService" parent="baseTransactionProxy">
+  <property name="target">
+			<bean class="com.onLineNote.service.project.ProjectServiceImpl">
+				<property name="projectDao" ref="projectDao" />
+			</bean>
+		</property>
+ </bean>	 
+	 
+	 
  <bean id="rightService"
   class="com.onLineNote.service.right.RightServiceImpl">
    <property name="userDao" ref="userDao"></property>
@@ -84,6 +99,12 @@
  
 
  <!-- 配置控制层 -->
+  <bean id="RegistAction"
+  class="com.onLineNote.action.project.RegistAction"  scope="prototype">
+  <property name="projectService" ref="projectService"></property>
+ </bean>
+ 
+ 
  <bean id="LoginAction"
   class="com.onLineNote.action.right.LoginAction"  scope="prototype">
   <property name="rightService" ref="rightService"></property>

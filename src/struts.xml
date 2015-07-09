@@ -26,9 +26,21 @@
 	    <action name="GetNodeInfoByContent" class="com.onLineNote.action.right.GetTreeInfoAction" method="getNodeInfoByContent"/>
 	    
 		<action name="GetTreeInfoAction" class="com.onLineNote.action.right.GetTreeInfoAction"/>
+</package>
+
+
+<!-- 项目管理功能新增 -->
+<package name="com.onLineNote.action.project" extends="struts-default">
+
+       <action name="Regist" class="com.onLineNote.action.project.RegistAction">
+			<result name="suc">/regist.jsp</result>
+		</action>
 		
-		
-			
+		<action name="RegistSubmit" class="com.onLineNote.action.project.RegistAction" method="registSubmit">
+			<result name="suc">/login.jsp</result>
+			<result name="fal">/regist.jsp</result>
+		</action>
+
 </package>
 
 </struts>    
